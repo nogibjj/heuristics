@@ -57,14 +57,13 @@ def main():
     return tsp(cities)
 
 
-# call the main function multiple times and return the minimal distance and the city list
-if __name__ == "__main__":
+def run():
     # create a list of distances
     distance_list = []
     # create a list of city lists
     city_list = []
     # loop 100 times
-    for i in range(100):
+    for _ in range(100):
         # call the main function
         distance, cities = main()
         # append the distance to the distance list
@@ -75,3 +74,7 @@ if __name__ == "__main__":
     index = distance_list.index(min(distance_list))
     # print the minimum distance and the city list
     print(min(distance_list), city_list[index])
+
+
+if __name__ == "__main__":
+    run()
