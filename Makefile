@@ -5,7 +5,6 @@ install:
 test:
 	python -m pytest -vv test_*.py
 
-# format all python files nested in sub-directories using python black
 format:	
 	black *.py
 
