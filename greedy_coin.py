@@ -26,7 +26,7 @@ def greedy_coin(change):
 def main(change):
     """Return the minimum number of coins for a given change
 
-    Example: python3 greedy_coin.py 0.99
+    Example: ./greedy_coin.py 0.99
     """
     greedy_coin(change)
 
