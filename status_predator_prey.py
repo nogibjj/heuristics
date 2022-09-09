@@ -9,6 +9,12 @@ https://scientific-python.readthedocs.io/en/latest/notebooks_rst/3_Ordinary_Diff
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import odeint
+
+Other ideas:
+
+* Can we model an iterative prisoner's dilemma where multiple group memberships create a better outcome in status by playing the game
+a metaheruistic game?
+
 """
 from random import random
 
