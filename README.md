@@ -3,6 +3,9 @@
 # Advanced-Heuristics-and-Algorithms-in-Python
 Copilot assisted algorithms and heuristics
 
+## Week 2 TBD
+
+
 ## Week 1
 
 * [command-line tool that accepts arbitrary cities and finds shortest path using greedy random similuations](https://github.com/nogibjj/heuristics/blob/main/fetch_cities_lat_long.py)
