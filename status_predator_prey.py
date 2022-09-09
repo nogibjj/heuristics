@@ -15,6 +15,8 @@ Other ideas:
 * Can we model an iterative prisoner's dilemma where multiple group memberships create a better outcome in status by playing the game
 a metaheruistic game?
 
+possibile inspiration: https://github.com/INASIC/predator-prey_systems/blob/master/Modelling%20Predator-Prey%20Systems%20in%20Python.ipynb
+
 """
 from random import random
 
