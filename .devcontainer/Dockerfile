@@ -21,7 +21,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
      && apt-get install -y ruby-full
  
 # Run custom language installs
-RUN cd installs && ./setup_rust.sh \
+RUN pwd; cd /installs && ./setup_rust.sh \
      && ./setup_swift.sh
 
 # [Optional] Uncomment this line to install global node packages.
