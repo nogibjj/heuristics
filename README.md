@@ -3,7 +3,14 @@
 # Advanced-Heuristics-and-Algorithms-in-Python
 Copilot assisted algorithms and heuristics
 
-## Week 2 TBD
+## Week 2 algo translations 
+
+* Using advanced features of copilot labs to translate algo
+
+### Languages installed via .devcontainer and verified can translate
+
+* Ruby
+* Rust
 
 
 ## Week 1
