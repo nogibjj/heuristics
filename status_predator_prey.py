@@ -22,8 +22,10 @@ from random import random
 
 TOTAL_STATUS = 100
 
+
 def get_status():
     return random() * TOTAL_STATUS
+
 
 def get_status_group(status):
     if status < 25:
@@ -32,7 +34,3 @@ def get_status_group(status):
         return "mid"
     else:
         return "high"
-
-
-
-

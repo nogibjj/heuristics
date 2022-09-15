@@ -1,4 +1,17 @@
 #!/usr/bin/env python
+""" Greedy Coin Change Algorithm
+1. The function greedy_coin takes one argument, the amount of change to be given to the customer.
+2. The function prints a statement to tell the customer how much change they are getting.
+3. The function initializes a list of coins (quarters, dimes, nickels, and pennies) and a dictionary that maps the coins to their denominations.
+4. The function initializes a dictionary that will hold the number of coins of each type.
+5. The function goes through the list of coins and initializes the dictionary with a value of 0 for each coin.
+6. The function goes through the list of coins.
+7. The function subtracts the coin from the amount of change the customer is getting until the amount of change is less than the coin.
+8. The function then increments the number of coins of that type by 1.
+9. The function prints the number of each coin type the customer is getting.
+10. The function returns the dictionary with the number of each coin type. 
+"""
+
 import click
 
 

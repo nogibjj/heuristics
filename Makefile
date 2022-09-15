@@ -8,6 +8,8 @@ test:
 format:	
 	black *.py
 
+refactor: format lint
+
 lint:
 	pylint --disable=R,C --ignore-patterns=test_.*?py *.py 
 
