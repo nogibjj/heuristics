@@ -21,10 +21,13 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
      && apt-get install -y ruby-full
  
 # Run custom language installs
-WORKDIR /home/
-COPY . .
-RUN bash ./setup_rust.sh \
-     && ./setup_swift.sh
+RUN echo "$PWD"
+#setup rust
+COPY installs/setup_rust.sh /tmp/installs/setup_rust.sh
+RUN bash /tmp/installs/setup_rust.sh
+#setup swift
+COPY installs/setup_swift.sh /tmp/installs/setup_swift.sh
+RUN bash /tmp/installs/setup_swift.sh
 
 # [Optional] Uncomment this line to install global node packages.
 # RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1
