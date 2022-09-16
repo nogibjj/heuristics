@@ -2,6 +2,12 @@ install:
 	pip install --upgrade pip &&\
 		pip install -r requirements.txt
 
+language-install:
+	installs/setup_rust.sh
+	installs/setup_swift.sh
+
+global-install: install language-install
+
 test:
 	python -m pytest -vv test_*.py
 

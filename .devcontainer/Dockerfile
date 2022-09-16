@@ -19,15 +19,6 @@ RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
      && apt-get -y install --no-install-recommends vim \
      && apt-get install -y ruby-full
- 
-# Run custom language installs
-RUN echo "$PWD"
-#setup rust
-COPY installs/setup_rust.sh /tmp/installs/setup_rust.sh
-RUN bash /tmp/installs/setup_rust.sh
-#setup swift
-COPY installs/setup_swift.sh /tmp/installs/setup_swift.sh
-RUN bash /tmp/installs/setup_swift.sh
 
 # [Optional] Uncomment this line to install global node packages.
 # RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1
