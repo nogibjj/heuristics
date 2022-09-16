@@ -4,6 +4,12 @@
 # Advanced-Heuristics-and-Algorithms-in-Python
 Copilot assisted algorithms and heuristics
 
+## Algorithms
+
+* dijkstra shortest path
+* merge sort
+
+
 ## Week 2 algo translations 
 
 * Using advanced features of copilot labs to translate algo
@@ -25,3 +31,8 @@ Copilot assisted algorithms and heuristics
 * [Outlier Detection](https://github.com/yzhao062/pyod)
 * Predator/Prey
 * Evalutionary Algorithms
+
+
+## References
+
+* [Ten Equations](https://www.amazon.com/Ten-Equations-that-Rule-World-ebook/dp/B07Z78T7WJ)
