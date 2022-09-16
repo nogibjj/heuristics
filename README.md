@@ -9,6 +9,21 @@ Copilot assisted algorithms and heuristics
 * dijkstra shortest path
 * merge sort
 
+## Equations
+
+### David Sumpter's 10 Equations
+
+* Judgment Equation:  Bayes
+* Betting Equation
+* Confidence Equation
+* Skill Equation:  Markov
+* Influencer Equation
+* Market Equation
+* Advertising Equation
+* Reward Equation
+* Learning Equation
+* Universal Equation
+
 
 ## Week 2 algo translations 
 
