@@ -7,6 +7,7 @@ city_list = my_cities("New York", "Knoxville", "Los Angeles", "Chicago")
 df = create_cities_dataframe(city_list)
 
 
+@pytest.mark.slow
 def test_my_cities():
     """Test my_cities function"""
     assert my_cities("New York", "Knoxville", "Los Angeles", "Chicago") == [
@@ -17,6 +18,7 @@ def test_my_cities():
     ]
 
 
+@pytest.mark.slow
 def test_main():
     """Test main function"""
     assert main(count=1) == None

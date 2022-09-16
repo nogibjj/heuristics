@@ -9,7 +9,8 @@ language-install:
 global-install: install language-install
 
 test:
-	python -m pytest -vv test_*.py
+	#ignores the virus of pandas warnings
+	python -m pytest -vv -p no:warnings test_*.py tests/
 
 format:	
 	black *.py
