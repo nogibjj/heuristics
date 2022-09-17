@@ -12,7 +12,7 @@ def wheel():
 
 def test_calculate_winnings_red(wheel):
     results = simulate_spins(wheel, 2)
-    assert (-1 <= calculate_winnings(results, 1, 2, color="red")<=2)
+    assert (-2 <= calculate_winnings(results, 1, 2, color="red")<=2)
 
 def test_calculate_winnings_black(wheel):
     results = simulate_spins(wheel, 2)
