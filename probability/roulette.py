@@ -1,6 +1,17 @@
 #!/usr/bin/env python
 """
 Examples of routines for simulating a roulette wheel.
+The big takeaway is the concept of the law of large numbers.
+Roulette has a negative expected value, so you will lose money in the long run.
+
+
+Future improvements:
+
+    * Allow for bets on multiple numbers and colors as well as odd/even, etc
+    * Allow for different bets on different spins
+    * Jupyter notebook with interactive widgets to show historical results
+    * Add a web interface to allow for bets and results using streamlit or gradio
+
 """
 import pandas as pd
 import click
@@ -77,7 +88,6 @@ def simulate_spins(wheel, spins):
     return pd.concat(results)
 
 
-# generate a report on count of each color and number that landed, total number of spins, and total winnings, if any
 def generate_report(results, full_report=False):
     """
     Generate a report on the results of the roulette wheel simulation
@@ -91,7 +101,6 @@ def generate_report(results, full_report=False):
     print(f"Number of times each color landed:\n {results['color'].value_counts()}")
 
 
-# build a function to calculate the winnings of a dataframe of results that contains color number and slot
 def calculate_winnings(results, bet, count, color=None, number=None):
     """
     Calculate the winnings of the roulette wheel simulation
@@ -106,7 +115,6 @@ def calculate_winnings(results, bet, count, color=None, number=None):
             results[results["color"] == "red"]["slot"].count() * (bet * 2)
             - total_amount_bet
         )
-        print(f"Total count for red: {color_winnings}")
     elif color == "black":
         color_winnings = (
             results[results["color"] == "black"]["slot"].count() * (bet * 2)
@@ -159,7 +167,6 @@ def cli():
 
 @cli.command("spin")
 @click.option("--count", default=1, help="Total count of spins")
-# dont' all the user to bet on a color or number at the same time
 @click.option(
     "--color", type=click.Choice(["red", "black", "green"]), help="Color to bet on"
 )
@@ -170,7 +177,12 @@ def cli():
 )
 def spin_option(count, bet, number_bet, color):
     """
-    Spin the roulette wheel
+    Spin the roulette wheel:
+
+     Example:
+        Ten spins of the wheel with a bet of $1 on red
+        ./roulette.py spin --count 10 --color red --bet 1
+
     """
     print(f"Selected number of spins: {count}")
     if not number_bet and not color:
@@ -179,7 +191,7 @@ def spin_option(count, bet, number_bet, color):
         print(f"Selected bet amount: {bet}")
     if number_bet and color:
         print("Can't bet on color and number at the same time")
-        # exit the program
+        # exit the program if both color and number are selected
         sys.exit()
 
     print(f"Selected number to bet on: {number_bet}")
