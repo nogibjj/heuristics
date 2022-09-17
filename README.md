@@ -10,6 +10,11 @@ Copilot assisted algorithms and heuristics
 
 `python probability/roulette.py spin --count 10000 --color="black"`
 
+* Poker similator (run `make install` then)
+
+`python probability/poker.py interactive --rounds 5`
+
+
 ## Algorithms
 
 * dijkstra shortest path
