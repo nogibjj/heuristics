@@ -4,7 +4,6 @@ Examples of routines for simulating a roulette wheel.
 The big takeaway is the concept of the law of large numbers.
 Roulette has a negative expected value, so you will lose money in the long run.
 
-
 Future improvements:
 
     * Allow for bets on multiple numbers and colors as well as odd/even, etc
