@@ -4,6 +4,12 @@
 # Advanced-Heuristics-and-Algorithms-in-Python
 Copilot assisted algorithms and heuristics
 
+## Probabilitiy
+
+* Roulette simulator:
+
+`python probability/roulette.py spin --count 10000 --color="black"`
+
 ## Algorithms
 
 * dijkstra shortest path
