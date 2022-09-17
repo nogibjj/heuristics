@@ -99,22 +99,34 @@ def calculate_winnings(results, bet, count, color=None, number=None):
     """
     color_winnings = 0
     number_winnings = 0
-    number_total_winnings = 0
-    color_total_winnings = 0
+    total_amount_bet = count * bet
+
     if color == "red":
-        color_winnings = results[results["color"] == "red"]["slot"].count()
+        color_winnings = (
+            results[results["color"] == "red"]["slot"].count() * (bet * 2)
+            - total_amount_bet
+        )
         print(f"Total count for red: {color_winnings}")
     elif color == "black":
-        color_winnings = results[results["color"] == "black"]["slot"].count()
+        color_winnings = (
+            results[results["color"] == "black"]["slot"].count() * (bet * 2)
+            - total_amount_bet
+        )
     elif color == "green":
-        color_winnings = results[results["color"] == "green"]["slot"].count()
-    color_total_winnings = (color_winnings * 2) - (count * bet)
+        color_winnings = (
+            results[results["color"] == "green"]["slot"].count() * (bet * 17)
+            - total_amount_bet
+        )
 
     if number:
-        number_winnings = results[results["number"] == number]["slot"].count()
-        number_total_winnings = (number_winnings * 35) - (count*bet)
+        number_winnings = (
+            results[results["number"] == number]["slot"].count() * (bet * 35)
+            - total_amount_bet
+        )
+        ncount = results[results["number"] == number]["slot"].count()
+        print(f"Total count for number bet on [{number}]: {ncount}")
 
-    grand_total = sum([color_total_winnings, number_total_winnings])
+    grand_total = sum([color_winnings, number_winnings])
     return grand_total
 
 
@@ -131,7 +143,7 @@ def print_wheel(results):
         else:
             # if the number is 37 replace it with 00 and don't print number
             if row["slot"] == 37:
-                click.secho(f"00", fg="green", nl=False)
+                click.secho("00", fg="green", nl=False)
             else:
                 click.secho(f"{row['slot']}", fg="green", nl=False)
         click.echo(" ", nl=False)
