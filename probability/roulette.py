@@ -189,7 +189,6 @@ def spin_option(count, bet, number_bet, color):
     wheel = build_wheel()
     # simulate the spins
     results = simulate_spins(wheel, count)
-    print(results)
     # print the results
     print_wheel(results)
     generate_report(results)
