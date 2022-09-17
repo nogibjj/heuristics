@@ -13,11 +13,12 @@ test:
 	python -m pytest -vv -p no:warnings test_*.py tests/
 
 format:	
-	black *.py
+	black .
 
 refactor: format lint
 
 lint:
-	pylint --disable=R,C --ignore-patterns=test_.*?py *.py 
+	find . -type f -name "*.py" \
+	 | xargs pylint --disable=R,C --ignore-patterns=test_.*?py 
 
 all: install lint test
