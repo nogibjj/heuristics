@@ -58,7 +58,7 @@ def calculate_value_multiple(
     startup_valuation=100000000,
     percent_owned=0.01,
     simulations=4,
-    probability=0.23,
+    probability=0.023,
     people=1000,
 ):
     """Calculate the value of startup for multiple people
@@ -105,25 +105,47 @@ def calculate_value_multiple(
     return total
 
 
-def simulate_investor(startup_valuation=100000000, simulations=100, probability=0.023):
+def simulate_investor(
+    startup_valuation=None, investments=None, simulations=100, probability=0.023
+):
     """Simulate a venture capitalist investing in a porfolio of companies"""
     total = 0
-    amount_invested = 100000
+    low_range, high_range = startup_valuation
+    low_range_investments, high_range_investments = investments
+    accumulated_investments = 0
+    print(
+        f"low range investments: {low_range_investments} high range investments: {high_range_investments}"
+    )
     for simulation in range(1, simulations + 1):
         # generate scenarios with probability 0.5
         scenarios = generate_true_false(probability, simulations)
         # if True, add value of startup to total
         percentage_owned = random.uniform(0.25, 0.50)
+        startup_valuation = random.randint(low_range, high_range)
+        amount_invested = random.randint(low_range_investments, high_range_investments)
+        accumulated_investments += amount_invested
+        # print accumulated_investment in millions
+        print(f"Cumulative INVESTMENT: {accumulated_investments/1000000:.2f} million")   
+        print(f"Cumulative PAYOUT: {total/1000000:.2f} million")
         print(f"Percentage owned: {percentage_owned}")
         if scenarios[0]:
             total += startup_valuation * percentage_owned
-        # if False, subtract value of startup from total
+        # if False skip
         else:
-            total -= 0
-        # print total value of startup
-        print(f"Cumulative Total value of startup: {total} Company #{simulation}")
-    return_on_investment = total / amount_invested*simulations
-    return return_on_investment
+            continue
+    return_on_investment = total - accumulated_investments
+    try:
+        percentage_return_on_investment = return_on_investment / total * 100
+    except ZeroDivisionError:
+        percentage_return_on_investment = 0
+    payoff_dictionary = {
+        "percentage_return_on_investment": percentage_return_on_investment,
+        "amount_invested": accumulated_investments,
+        "amount_returned": total,
+        "return_on_investment": return_on_investment,
+    }
+    return payoff_dictionary
+
 
 def sanity_test(num):
     """Show the ratio of True/False is close to the probability via law or large numbers"""
@@ -132,6 +154,7 @@ def sanity_test(num):
     generate_true_false([0.5, 0.5], num)
     # generate 10 scenarios with probability 0.023 (1 in 43 startups succeed)
     generate_true_false([0.023, 0.977], num)
+
 
 @click.group()
 def cli():
@@ -152,21 +175,48 @@ def sanity(num):
 
 
 @cli.command("vcportfolio")
-@click.option("--startup_valuation", default=100000000, help="Value of startup")
-@click.option("--simulations", default=100, help="Number of startups worked for in a row")
+@click.option(
+    "--startup_valuation", default="10000000, 10000000000", help="Value of startup range"
+)
+@click.option(
+    "--simulations", default=100, help="Number of startups worked for in a row"
+)
 @click.option("--probability", default=0.023, help="Probability of startup success")
-def vcportfolio(startup_valuation, simulations, probability):
+@click.option(
+    "--investments", default="10000, 10000000", help="Amount invested range"
+)
+def vcportfolio(startup_valuation, simulations, probability, investments):
     """Simulate a venture capitalist investing in a porfolio of companies
 
     Example:
-        python startup_game.py vcportfolio --startup_valuation 100000000 --simulations 100 --probability 0.23
+        python startup_game.py vcportfolio --startup_valuation (1000000, 100000000) --simulations 100 --probability 0.23
     """
-    
+    startup_valuation = tuple(map(int, startup_valuation.split(",")))
+    investment_range = tuple(map(int, investments.split(",")))
+    print(f"Startup Valuation: {startup_valuation}")
+    print(f"Investments: {investments}")
     click.echo(click.style(f"Startup Valuation: {startup_valuation}", fg="green"))
-    click.echo(click.style(f"Simulations (Companies in Portfolio): {simulations}", fg="green"))
+    click.echo(
+        click.style(f"Simulations (Companies in Portfolio): {simulations}", fg="green")
+    )
     click.echo(click.style(f"Probability of success: {probability}", fg="green"))
-    #show return on investment for venture capitalist
-    click.echo(click.style(f"Return on Investment: {simulate_investor(startup_valuation, simulations, probability)}", fg="green"))
+    # show return on investment for venture capitalist
+    roi = simulate_investor(
+        startup_valuation=startup_valuation,
+        investments=investment_range,
+        simulations=simulations,
+        probability=probability,
+    )
+    try:
+        click.echo(click.style(f"Amount Invested: ${roi['amount_invested']/1000000:.2f}M", fg="green"))
+        click.echo(click.style(f"Amount Returned: ${roi['amount_returned']/1000000:.2f}M", fg="green"))
+        click.echo(click.style(f"Return on Investment: ${roi['return_on_investment']/1000000:.2f}M", fg="green"))
+        click.echo(click.style(f"Percentage Return on Investment: {roi['percentage_return_on_investment']:.2f}%", fg="green"))
+    except TypeError:
+        click.echo(click.style(f"Amount Invested: ${roi/1000000:.2f}M", fg="green"))
+        click.echo(click.style(f"Amount Returned: ${roi/1000000:.2f}M", fg="green"))
+        click.echo(click.style(f"Return on Investment: ${roi/1000000:.2f}M", fg="green"))
+        click.echo(click.style(f"Percentage Return on Investment: 0%", fg="green"))
 
 @cli.command("simulate")
 @click.option("--startup_valuation", default=100000000, help="Value of startup")
