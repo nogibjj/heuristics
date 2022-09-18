@@ -1,6 +1,6 @@
 ## Probability
 
-Many of these solutions are based on the concept of Monte-Carlo Simulations.  Essentially generate random simulations and discover the pattern that emerges:  i.e. negative expected value in Roulette or an optimal betting strategy for poker using expected value.
+Many of these solutions are based on the concept of Random or Monte-Carlo Simulations.  Essentially generate random simulations and discover the pattern that emerges:  i.e. negative expected value in Roulette or an optimal betting strategy for poker using expected value.
 
 Random simulations also play a role in optimizing heuristics like greedy random start for the TSP.
 
