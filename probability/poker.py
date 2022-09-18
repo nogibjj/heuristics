@@ -80,7 +80,8 @@ def build_poker_hand():
     }
     return poker_hand
 
-#build function that displays the probability of each hand of poker
+
+# build function that displays the probability of each hand of poker
 def display_poker_hand_probability():
     """
     Display the probability of each hand of poker
@@ -138,6 +139,7 @@ def evaluate_poker_hand(hand):
     else:
         return "High Card"
 
+
 def simulate_hands(deck, hands):
     """
     Simulate multiple hands of cards
@@ -146,6 +148,7 @@ def simulate_hands(deck, hands):
     for _ in range(hands):
         results.append(deal_hand(deck))
     return results
+
 
 # build a function to play two hands against each other
 def play_poker_hand(hand1, hand2):
@@ -157,7 +160,7 @@ def play_poker_hand(hand1, hand2):
     hand2_rank = evaluate_poker_hand(hand2)
     hand1_rank_value = display_poker_hand()[hand1_rank]
     hand2_rank_value = display_poker_hand()[hand2_rank]
-    #print the hands as well as the rank and type of hand
+    # print the hands as well as the rank and type of hand
     print("Hand 1: {} - {} - {}".format(hand1, hand1_rank, hand1_rank_value))
     print("Hand 2: {} - {} - {}".format(hand2, hand2_rank, hand2_rank_value))
     # determine the winner
@@ -168,6 +171,7 @@ def play_poker_hand(hand1, hand2):
     else:
         return {"winner": "Tie", "hand": hand1}
 
+
 @click.group()
 def cli():
     """
@@ -176,7 +180,9 @@ def cli():
 
 
 @cli.command("info")
-@click.option("--probability", is_flag=True, help="Display the probability of each hand of poker")
+@click.option(
+    "--probability", is_flag=True, help="Display the probability of each hand of poker"
+)
 def info(probability):
     """
     Displays all possible winning hands with examples
@@ -186,11 +192,14 @@ def info(probability):
     poker_hand = build_poker_hand()
     if probability:
         poker_hand_probability = display_poker_hand_probability()
-        for hand, rank in poker_hand_rank.items():
-            #print probability of each hand with click colors and example and 1 in x chance
+        for hand, _ in poker_hand_rank.items():
+            # print probability of each hand with click colors and example and 1 in x chance
             click.secho(
                 "{} - {} - 1 in {:,} - {:4f}%".format(
-                    hand, poker_hand[hand], 1 / poker_hand_probability[hand], poker_hand_probability[hand]
+                    hand,
+                    poker_hand[hand],
+                    1 / poker_hand_probability[hand],
+                    poker_hand_probability[hand],
                 ),
                 fg="yellow",
             )
@@ -220,7 +229,8 @@ def deal(hands):
         hand_rank = evaluate_poker_hand(hand)
         click.echo(f"Hand Rank: {hand_rank}")
 
-#build a play function that takes a bet
+
+# build a play function that takes a bet
 @cli.command("play")
 @click.option("name", "--name", default="Player", help="Name of the player")
 @click.option("hand", "--hand", default=1, help="Hand to play")
@@ -229,20 +239,21 @@ def play(bet, name, hand):
     """
     Play a hand of poker against the computer with a bet
     """
-    
+
     deck = deck_of_cards()
     hand1 = deal_hand(deck)
     hand2 = deal_hand(deck)
     status = play_poker_hand(hand1, hand2)
-    #print the winner and the amount of money won or lost
+    # print the winner and the amount of money won or lost
     if status["winner"] == "Hand 1" and hand == 1:
         click.secho(f"{name} wins ${bet}! with Hand1", fg="green")
     elif status["winner"] == "Hand 2":
         click.secho(f"{name} loses ${bet}! with Hand2", fg="red")
     elif status["winner"] == "Tie":
-        click.secho(f"It's a tie!", fg="yellow")
+        click.secho("It's a tie!", fg="yellow")
 
-#build an interactive play function that takes a bet
+
+# build an interactive play function that takes a bet
 @cli.command("interactive")
 @click.option("name", "--name", default="Player", help="Name of the player")
 @click.option("rounds", "--rounds", default=1, help="Number of rounds to play")
@@ -251,30 +262,35 @@ def interactive(name, rounds, money):
     """
     Play a hand of poker against the computer with a bet
     """
-    
+    bet = 0
     history = {
         "rounds": 0,
         "expected_value": {},
-        "probability_of_winning": {},
+        "probability_of_hand": {},
+        "bet": {},
         "wins": 0,
         "losses": 0,
         "ties": 0,
         "money": money,
     }
 
-    for _ in range(rounds):
+    for i in range(rounds):
+        print(f"Round {1}:  Money: ${history['money']}")
         deck = deck_of_cards()
         hand1 = deal_hand(deck)
         hand2 = deal_hand(deck)
+        hand_probability = display_poker_hand_probability()[evaluate_poker_hand(hand1)]
         print("Hand 1: {} - {}".format(hand1, evaluate_poker_hand(hand1)))
-        #print probability of hand1 rounded to 2 decimal places
-        print("Probability of Hand 1: {:.2f}%".format(display_poker_hand_probability()[evaluate_poker_hand(hand1)]))
-        #ask user how much they want to bet
+        # print probability of hand1 rounded to 2 decimal places
+        print("Probability of Hand 1: {:.2f}%".format(hand_probability))
+        # ask user how much they want to bet
         bet = click.prompt("How much would you like to bet?", type=int)
-        #print the expected value of the bet
-        print("Expected Value of Bet: ${}".format(bet * display_poker_hand_probability()[evaluate_poker_hand(hand1)]))
         status = play_poker_hand(hand1, hand2)
-        #print the winner and the amount of money won or lost
+        history["probability_of_hand"][f"round{i}"] = hand_probability
+        expected_value = (hand_probability) * bet
+        history["expected_value"][f"round{i}"] = expected_value
+        history["bet"][f"round{i}"] = bet
+        # print the winner and the amount of money won or lost
         if status["winner"] == "Hand 1":
             click.secho(f"{name} wins ${bet}! with Hand1", fg="green")
         elif status["winner"] == "Hand 2":
@@ -282,9 +298,9 @@ def interactive(name, rounds, money):
             bet = bet * -1
         elif status["winner"] == "Tie":
             bet = 0
-            click.secho(f"It's a tie!", fg="yellow")
-        
-        #update the history
+            click.secho("It's a tie!", fg="yellow")
+
+        # update the history
         history["rounds"] += 1
         history["money"] += bet
         if status["winner"] == "Hand 1":
@@ -293,12 +309,15 @@ def interactive(name, rounds, money):
             history["losses"] += 1
         elif status["winner"] == "Tie":
             history["ties"] += 1
-    #print the history  
+    # print the history
     click.secho(f"Rounds: {history['rounds']}", fg="green")
     click.secho(f"Wins: {history['wins']}", fg="green")
     click.secho(f"Losses: {history['losses']}", fg="red")
     click.secho(f"Ties: {history['ties']}", fg="yellow")
     click.secho(f"Money: {history['money']}", fg="green")
+    click.secho(f"Expected Value: {history['expected_value']}", fg="green")
+    click.secho(f"Probability of Hand: {history['probability_of_hand']}", fg="green")
+    click.secho(f"Bets: {history['bet']}", fg="green")
 
 
 if __name__ == "__main__":
