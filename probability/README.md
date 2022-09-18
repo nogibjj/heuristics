@@ -9,7 +9,6 @@ Examples include:
 * Poker Simulator
 * Roulette Simulator
 
-
 ## References
 
 * [IBM Cloud Monte Carlo Simulation](https://www.ibm.com/cloud/learn/monte-carlo-simulation)

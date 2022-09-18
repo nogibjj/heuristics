@@ -1,6 +1,14 @@
 #!/usr/env/bin python
 """
 A poker hand simulator
+
+Future updates:
+
+- Add a web version
+- add granularity to the simulation to allow for hands of same type to be ranked:  
+i.e. 2 pair of 10s and 2 pair of 9s.  Currently, the simulator will only rank the
+highest pair in each hand.
+
 """
 
 import random
@@ -171,7 +179,6 @@ def play_poker_hand(hand1, hand2):
     else:
         return {"winner": "Tie", "hand": hand1}
 
-
 @click.group()
 def cli():
     """
@@ -274,8 +281,8 @@ def interactive(name, rounds, money):
         "money": money,
     }
 
-    for i in range(rounds):
-        print(f"Round {1}:  Money: ${history['money']}")
+    for i in range(1, rounds+1):
+        print(f"Round {i}:  Money: ${history['money']}")
         deck = deck_of_cards()
         hand1 = deal_hand(deck)
         hand2 = deal_hand(deck)
@@ -287,7 +294,7 @@ def interactive(name, rounds, money):
         bet = click.prompt("How much would you like to bet?", type=int)
         status = play_poker_hand(hand1, hand2)
         history["probability_of_hand"][f"round{i}"] = hand_probability
-        expected_value = (hand_probability) * bet
+        expected_value = (1-(hand_probability * .01)) * abs(bet)
         history["expected_value"][f"round{i}"] = expected_value
         history["bet"][f"round{i}"] = bet
         # print the winner and the amount of money won or lost
@@ -318,7 +325,9 @@ def interactive(name, rounds, money):
     click.secho(f"Expected Value: {history['expected_value']}", fg="green")
     click.secho(f"Probability of Hand: {history['probability_of_hand']}", fg="green")
     click.secho(f"Bets: {history['bet']}", fg="green")
-
+    #sum of expected value vs money
+    expected_value = sum(history["expected_value"].values())
+    click.secho(f"Expected Value Total: {expected_value} vs Money {history['money']}", fg="red")
 
 if __name__ == "__main__":
     cli()
