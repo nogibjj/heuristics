@@ -105,6 +105,26 @@ def calculate_value_multiple(
     return total
 
 
+def simulate_investor(startup_valuation=100000000, simulations=100, probability=0.023):
+    """Simulate a venture capitalist investing in a porfolio of companies"""
+    total = 0
+    amount_invested = 100000
+    for simulation in range(1, simulations + 1):
+        # generate scenarios with probability 0.5
+        scenarios = generate_true_false(probability, simulations)
+        # if True, add value of startup to total
+        percentage_owned = random.uniform(0.25, 0.50)
+        print(f"Percentage owned: {percentage_owned}")
+        if scenarios[0]:
+            total += startup_valuation * percentage_owned
+        # if False, subtract value of startup from total
+        else:
+            total -= 0
+        # print total value of startup
+        print(f"Cumulative Total value of startup: {total} Company #{simulation}")
+    return_on_investment = total / amount_invested*simulations
+    return return_on_investment
+
 def sanity_test(num):
     """Show the ratio of True/False is close to the probability via law or large numbers"""
 
@@ -112,7 +132,6 @@ def sanity_test(num):
     generate_true_false([0.5, 0.5], num)
     # generate 10 scenarios with probability 0.023 (1 in 43 startups succeed)
     generate_true_false([0.023, 0.977], num)
-
 
 @click.group()
 def cli():
@@ -131,6 +150,23 @@ def sanity(num):
 
     sanity_test(num=num)
 
+
+@cli.command("vcportfolio")
+@click.option("--startup_valuation", default=100000000, help="Value of startup")
+@click.option("--simulations", default=100, help="Number of startups worked for in a row")
+@click.option("--probability", default=0.023, help="Probability of startup success")
+def vcportfolio(startup_valuation, simulations, probability):
+    """Simulate a venture capitalist investing in a porfolio of companies
+
+    Example:
+        python startup_game.py vcportfolio --startup_valuation 100000000 --simulations 100 --probability 0.23
+    """
+    
+    click.echo(click.style(f"Startup Valuation: {startup_valuation}", fg="green"))
+    click.echo(click.style(f"Simulations (Companies in Portfolio): {simulations}", fg="green"))
+    click.echo(click.style(f"Probability of success: {probability}", fg="green"))
+    #show return on investment for venture capitalist
+    click.echo(click.style(f"Return on Investment: {simulate_investor(startup_valuation, simulations, probability)}", fg="green"))
 
 @cli.command("simulate")
 @click.option("--startup_valuation", default=100000000, help="Value of startup")
