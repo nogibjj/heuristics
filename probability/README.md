@@ -13,3 +13,4 @@ Examples include:
 
 * [IBM Cloud Monte Carlo Simulation](https://www.ibm.com/cloud/learn/monte-carlo-simulation)
 * [Monte-Carlo Simulations](https://en.wikipedia.org/wiki/Monte_Carlo_method#History)
+* [Video Poker Odds](https://en.wikipedia.org/wiki/Poker_probability#/media/File:Video_poker_JoB_odds.svg)
