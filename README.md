@@ -4,6 +4,18 @@
 # Advanced-Heuristics-and-Algorithms-in-Python
 Copilot assisted algorithms and heuristics
 
+## Parallel
+
+Information on [CUDA with Numba](https://numba.pydata.org/numba-doc/latest/cuda/)
+For using CUDA you must create an activate conda:  
+
+```
+conda create
+conda create --name myenv
+conda activate myenv
+conda init bash
+```
+
 ## Probability
 
 * Roulette simulator:
