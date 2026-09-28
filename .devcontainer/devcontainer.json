@@ -1,13 +1,18 @@
 {
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"ms-python.python",
-				"ms-toolsai.jupyter"
-			]
-		}
-	},
-	"features": {
-		 "ghcr.io/devcontainers/features/nvidia-cuda:1": {}
-	}
+  "name": "CUDA Python DevContainer",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter"
+      ]
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11"
+    },
+    "ghcr.io/devcontainers/features/nvidia-cuda:1": {}
+  }
 }

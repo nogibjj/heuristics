@@ -1,10 +1,11 @@
 install:
 	##non-gpu version
-	#pip install --upgrade pip &&\
-	#	pip install -r requirements.txt
+	pip install --upgrade pip &&\
+		pip install -r requirements.txt
 	####optimizing for conda in GPU environment
-	#conda env create -f environment.yml
-	#conda activate heuristics
+	conda env create -f environment.yml
+	conda init
+	conda activate heuristics
 
 language-install:
 	installs/setup_rust.sh

@@ -1,5 +1,4 @@
-[![Codespaces Prebuilds](https://github.com/nogibjj/heuristics/actions/workflows/codespaces/create_codespaces_prebuilds/badge.svg)](https://github.com/nogibjj/heuristics/actions/workflows/codespaces/create_codespaces_prebuilds)
-[![Python application test with Github Actions using devcontainers](https://github.com/nogibjj/heuristics/actions/workflows/main.yml/badge.svg)](https://github.com/nogibjj/heuristics/actions/workflows/main.yml)
+[![Python application test with Github Actions using devcontainers](https://github.com/swastik175/heuristics/actions/workflows/main.yml/badge.svg)](https://github.com/swastik175/heuristics/actions/workflows/main.yml)
 
 # Advanced-Heuristics-and-Algorithms-in-Python
 Copilot assisted algorithms and heuristics
